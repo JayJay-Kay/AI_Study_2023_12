@@ -6,7 +6,8 @@ AI 추천 언어: 파이썬
 - 단순한 신텍스, 높은 가독성, 풍부한 라이브러리
 
 핫한 인공지능 관련 용어들의 차이
-<img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/21239c3a-8b8e-43fb-8e84-6b254048b710" width="900">
+
+<img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/21239c3a-8b8e-43fb-8e84-6b254048b710" width="700">
 
 머신러닝: 컴퓨터를 인간처럼 학습싴켜 스스로 규칙을 형성할 수 있게 만드는 알고리즘의 과학
 
