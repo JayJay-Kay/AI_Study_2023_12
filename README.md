@@ -40,23 +40,38 @@ AI 추천 언어: 파이썬
 5. Panads: 행과 열을 가지는 2차원 데이터 분석을 위한 라이브러리
 6. Tensorflow: 추상적으로 전체적 논리에 집중할 수 있도록 세부 구현, 함수 출력&입력값 변환 해주는 라이브러리
 
+<br/><br/>
+
 챕터 2. 간단한 분류 알고리즘 훈련
 
 ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/956a4c71-6823-479c-9d4e-7ca2d91812d2)
 퍼셉트론(perceptron)
 - 뇌의 신경망을 흉내내는 알고리즘 (다수의 신호(input)을 받아서 하나의 신호(output)을 출력)
 - 학습 데이터를 설명할 수 있는 최적의 값을 찾음
-- 학습 규칙
-  1. 가중치를 0 또는 랜덤한 작은 값으로 초기화
-  2. 각 훈련 샘플 x에서 출력 값 y를 계산하고 가중치를 업데이트
+- 최종입력(Net Input)이 임계 값(θ)보다 크면 1, 아니면 0(or -1)으로 예측하는 선형 분류(linear classifier) 모형
+
+![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/c351033d-536b-4fb4-aede-dcad0c9b3fa3)
+
+퍼셉트론 학습 방법
+- 0또는 임의로 설정된 가중치(weight)로 시작
+- 샘플 X에서 출력값 y계산
+- 퍼셉트론 모형 분류가 잘못됐으면 weight 수정
+    - 정답 맞을때까지 무식하게 계속 수정?
+
+<img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/d81f1028-83b4-490d-89b8-bfee88db9bac" width="420">  
+
+<br/><br/>
 
 적응형 선형 뉴런/아달린 (ADAptive LInear NEurone = ADALINE) 
 - 퍼셉트론 업그레이드 버전
 - 가중치를 업데이트하는데 단위 계단 함수 대신 선형 활성화 함수 사용
+- 지속적인 에러 수정(error correction), 잡 데이터(noisy data) 관리를 해줌
 
 경사 하강법 (Gradient descent)
 - 1차 근삿값 발견용 최적화 알고리즘
 - 함수의 기울기/경사/gradient를 구하고 경사의 반대 방향으로 계속 이동시켜 극값에 올때까지 반복시키는 것
+
+<br/><br/>
 
 챕터 3. 사이킷런을 타고 떠나는 머신 러닝 분류 모델 투어
 
