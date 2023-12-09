@@ -1,4 +1,4 @@
-<h2>챕터 4 좋은 훈련 데이터 셋 만들기: 데이터 전처리</h2>
+<h2>챕터 4: 좋은 훈련 데이터 셋 만들기: 데이터 전처리</h2>
 <h3>4.1.데이터 전처리의 중요성</h3>
  누락된 값 식별 <br>
 <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/9c93c658-10a5-43ba-ace9-cb6474eccaa9" width="300"> <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/4367273a-0714-4b63-80d9-572e187f8866" width="300"> <br>
@@ -126,6 +126,60 @@
  - 사이킷런에서는 특성 중요도 값을 자동으로 계산해서 좀 더 수월하게 모델 훈련 가능
   - RandomForestClassifier 활용하여 모델 훈련후 feature_importances_를 통해 각 특성의 중요도 확인 가능
 <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/58159aae-20c6-4284-849b-753412c3ca2f" width="300"> ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/9eab6de9-e288-4c54-879a-0a0bd2582abf)
-  - 주의점: 서로 상관관계가 높은 2개 이상의 특성이 있다면, 한 특성은 높은 중요도를 갖더라도 다른 특성은 높은 중요도를 못가질 수 있음
+  - 주의점: 서로 상관관계가 높은 2개 이상의 특성이 있다면, 한 특성은 높은 중요도를 갖더라도 다른 특성은 높은 중요도를 못가질 수 있음 <br></br>
 
-<h2>챕터 5 차원 축소를 사용한 데이터 압축</h2>
+<h2>챕터 5: 차원 축소를 사용한 데이터 압축</h2>
+<h3>5.1. 주성분 분석을 통한 비지도 차원 축소</h3>
+
+- 특성 선택 vs 특성 추출
+ - 특성 선택 알고리즘을 사용할때는 원본 특성을 유지하지만 특성 추출은 새로운 특성 공간으로 데이터를 변환하거나 투영함
+ - 특성 추출은 저장 공간 절약, 알고리즘의 계싼 효율성 향상, 찬원의 저주(차원 증가할수록 데이터 밀도 다운, 머신러닝 모델 성능 다운)문제 감소시킴으로서 예측 성능 향
+
+- 주성분 분석 (Principal Component Analysis, PCA)
+ - 비지도 선형 변환 기법으로 특성 추출과 차원 축소에 주로 사용
+ - 데이터 패턴을 찾고 고차원 데이터를 더 낮은 차원의 새로운 부분 공간에 투영
+ - 사용예시: 주식 거재시장 잡음 제거, 생물정보학 분야의 게놈 데이터나 유전자 발현 분석
+ - 작동원리
+  - 데이터 분산이 가장 큰 방향을 찾아내고 그 방향(=주성분)으로 데이터를 투영
+  - 이렇게 생성된 새로운 특성 축은 서로 직각을 이루며 원본 특성 공간에서 가장 큰 분산을 가지는 방향을 나타냄
+  - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/b3981cb8-e48e-417f-bbec-35ce60cb9460)
+ - PCA 주요 단계
+   1. 표준화 전처리: 원본 데이터셋을 표준화 (모든 특성의 중요도를 동일하게 취급하기 위해 필요)
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/4bbf0df0-fe5b-429b-b435-317878c5b5f0)
+
+   2. 데이터셋의 공분산 행렬 생성
+    - 특성 xj와 xk사이의 공분산 계산법
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/71e7eec7-15ba-460b-8469-1b826c78cda0)
+
+   3. 고유 백터 및 고윳값 계산: 공분산 행렬을 고유 벡터와 고윳값으로 분해
+    - 벡터와 스케일을 이용한 공식으로 고유 벡터와 고윳값을 직접 계산하는것도 가능하지만 넘파이의 linalg.eig함수를 사용하는게 더 간편
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/45c5424f-fcee-4b25-a9fc-8f067eb0d853)
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/76c332dc-003a-4a37-9abb-b8c0c9ab2fa3)
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/8caec592-a347-4ba0-b96b-0701963242a9)
+    - 예시에서는 첫 번째 주성분이 분산의 40%정도를 커버하고 있는 것을 볼 수 있음 (첫 2개는 60%정도 커버)
+   
+   4. 고윳값 정렬 및 선택: 고윳값을 내림차순으로 정렬하고 가장 큰 고윳값을 가진 고육 벡터를 선택
+    - 데이터셋 차원을 새로운 특성 부분 공간으로 압축하여 줄여야 하기에 가장 많은 정보(분산)를 가진 고유벡터를 선택
+    - 설명된 분산 비율(explained variance ratio)을 통해 각 주성분이 어느정도의 분산을 커버하는지 보여줌
+     - 공식이 있지만 넘파이 cumsum함수와 step함수를 사용하는게 더 쉽다~
+     - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/8ef80feb-1ba0-4328-8c9f-797395cb7f93)
+     - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/849717a1-ebde-4211-846b-7b4aeb058a99)
+
+
+   5. 선택된 고유벡터(들)로 투영 행렬 생성
+    - 밑의 예시에서는 60%를 잡아낼 수 있는 2개의 고윳값에 해당하는 고유 벡터를 선택
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/0d655d12-ae11-4823-b0e3-376e2f75c29f)
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/d7bf40da-bda2-4b97-8fe0-bddc46598abb)
+    - 변환된 데이터셋을 2차원 산점도로 시각화하여 데이터가 새로운 특성축을 따라 어떻게 퍼지는 확인 가능
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/76c1c1b9-196b-465b-8631-86ded13e3a8c)
+     - 예시에서는 y축(두번째 주성분)보다 x축(첫번째 주성분)을 따라 더 넓게 퍼져있음
+     - 추가로, plot_decision_regions함수를 사용하여 결정 경계를 볼 수 있음
+       - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/96f69aaa-7e02-4b06-9bd9-6ab7659f9e87)
+     - 모델이 제대로 작동할때 테스트 데이터셋에 적용했을시
+       - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/9958eb67-58d4-462f-bbee-b7063a9e0244)
+
+   6. 차원 축소: 투영 행렬을 사용하여 원본 데이터셋을 새로운 저차원 특성 공간으로 변환
+
+
+<h3>5.2. 선형 판별 분석을 통한 지도 방식의 데이터 압축</h3>
+<h3>5.3. 커널 PCA를 사용하여 비선형 매</h3>
