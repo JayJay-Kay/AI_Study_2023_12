@@ -68,7 +68,7 @@
 
 - 특성 스케일 조정의 중요성 <br>
    - 대부분의 머신 러닝과 최적화 알고리즘은 특성 스케일이 같을때 더 나은 성능을 보임 (경사 하강법) <br>
-  - 결정 트리와 랜덤 포레스트는 특성 스케일 조정에 걱정할 필요가 없는 몇 안되는 머신러닝 알고리즘 <br>
+  - 결정 트리와 랜덤 포레스트(나중에 추가 설명)는 특성 스케일 조정에 걱정할 필요가 없는 몇 안되는 머신러닝 알고리즘 <br>
 - 스케일 조정에 사용되는 2가지 방법: 정규화(Normalization)와 표준화(Standardization) <br>
   - 정규화<br>
     - 특성의 스케일을 0,1 범위 맞추는 것 <br>
@@ -101,7 +101,7 @@
   ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/7bbef2b8-973d-4108-adff-f0e98cf0b406)
   - 비용 함수에 페널티 항(penalty term)을 추가하여 모델의 가중치 값을 작게 만드는데 목표를 둠
   - 규제가 없는 모델에 비해 더 작은 가중치 값을 가진 모델을 만ㄷ르어서 과대적합(OverFitting) 방지
-    - <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/1038106b-50b2-4a03-b0d9-16351481bc15" width="300">
+    - <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/1038106b-50b2-4a03-b0d9-16351481bc15" width="300"> <br></br>
 
   - L1 규제: L2규제의 가중치 제곱을 그냥 가중치 절댓값을 바꾼것 (대부분의 가중치가 0이 되고 잡데이터가 많은 고차원 데이터셋에 효과적)
   ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/a72b3ecc-cbe0-4617-8759-fe23f145d53b)
@@ -117,3 +117,15 @@
       - 순차 후진 선택 알고리즘 (Sequential Backward Selection, SBS)는 전통적인 순차 특성 알고리즘
         - 모델 성능을 유지하면서 계산 효율성을 향상시키기 위해 초기 특성 집합에서 특성을 순차적으로 제
     - 특성 추출(feature extraction) <-5장에서 다룸
+    
+<h3>4.6. 랜덤 포레스트의 특성 중요도 사용</h3>
+
+- 랜덤 포레스트(random forest) 알고리즘
+ - 앙상블에 참여한 모든 결정 트리에서 계산한 평균적인 불순도 감소로 특성 중요도 측정 가능
+ - <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/8a9faf89-26ae-4bde-a497-76057dfa09a1" width="500">
+ - 사이킷런에서는 특성 중요도 값을 자동으로 계산해서 좀 더 수월하게 모델 훈련 가능
+  - RandomForestClassifier 활용하여 모델 훈련후 feature_importances_를 통해 각 특성의 중요도 확인 가능
+<img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/58159aae-20c6-4284-849b-753412c3ca2f" width="300"> ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/9eab6de9-e288-4c54-879a-0a0bd2582abf)
+  - 주의점: 서로 상관관계가 높은 2개 이상의 특성이 있다면, 한 특성은 높은 중요도를 갖더라도 다른 특성은 높은 중요도를 못가질 수 있음
+
+<h2>챕터 5 차원 축소를 사용한 데이터 압축</h2>
