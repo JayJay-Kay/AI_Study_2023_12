@@ -145,25 +145,23 @@
   - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/b3981cb8-e48e-417f-bbec-35ce60cb9460)
  - PCA 주요 단계
    1. 표준화 전처리: 원본 데이터셋을 표준화 (모든 특성의 중요도를 동일하게 취급하기 위해 필요)
-    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/4bbf0df0-fe5b-429b-b435-317878c5b5f0)
+    - <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/4bbf0df0-fe5b-429b-b435-317878c5b5f0" width="500"> <br></br>
 
    2. 데이터셋의 공분산 행렬 생성
     - 특성 xj와 xk사이의 공분산 계산법
-    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/71e7eec7-15ba-460b-8469-1b826c78cda0)
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/71e7eec7-15ba-460b-8469-1b826c78cda0) <br></br>
 
    3. 고유 백터 및 고윳값 계산: 공분산 행렬을 고유 벡터와 고윳값으로 분해
     - 벡터와 스케일을 이용한 공식으로 고유 벡터와 고윳값을 직접 계산하는것도 가능하지만 넘파이의 linalg.eig함수를 사용하는게 더 간편
-    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/45c5424f-fcee-4b25-a9fc-8f067eb0d853)
-    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/76c332dc-003a-4a37-9abb-b8c0c9ab2fa3)
-    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/8caec592-a347-4ba0-b96b-0701963242a9)
-    - 예시에서는 첫 번째 주성분이 분산의 40%정도를 커버하고 있는 것을 볼 수 있음 (첫 2개는 60%정도 커버)
+    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/45c5424f-fcee-4b25-a9fc-8f067eb0d853) <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/76c332dc-003a-4a37-9abb-b8c0c9ab2fa3" width="400">
+    - <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/8caec592-a347-4ba0-b96b-0701963242a9" width="500">
+    - 예시에서는 첫 번째 주성분이 분산의 40%정도를 커버하고 있는 것을 볼 수 있음 (첫 2개는 60%정도 커버) <br></br>
    
    4. 고윳값 정렬 및 선택: 고윳값을 내림차순으로 정렬하고 가장 큰 고윳값을 가진 고육 벡터를 선택
     - 데이터셋 차원을 새로운 특성 부분 공간으로 압축하여 줄여야 하기에 가장 많은 정보(분산)를 가진 고유벡터를 선택
     - 설명된 분산 비율(explained variance ratio)을 통해 각 주성분이 어느정도의 분산을 커버하는지 보여줌
      - 공식이 있지만 넘파이 cumsum함수와 step함수를 사용하는게 더 쉽다~
-     - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/8ef80feb-1ba0-4328-8c9f-797395cb7f93)
-     - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/849717a1-ebde-4211-846b-7b4aeb058a99)
+     - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/8ef80feb-1ba0-4328-8c9f-797395cb7f93) <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/849717a1-ebde-4211-846b-7b4aeb058a99" width="400"><br></br>
 
 
    5. 선택된 고유벡터(들)로 투영 행렬 생성
@@ -176,7 +174,7 @@
      - 추가로, plot_decision_regions함수를 사용하여 결정 경계를 볼 수 있음
        - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/96f69aaa-7e02-4b06-9bd9-6ab7659f9e87)
      - 모델이 제대로 작동할때 테스트 데이터셋에 적용했을시
-       - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/9958eb67-58d4-462f-bbee-b7063a9e0244)
+       - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/9958eb67-58d4-462f-bbee-b7063a9e0244) <br></br>
 
    6. 차원 축소: 투영 행렬을 사용하여 원본 데이터셋을 새로운 저차원 특성 공간으로 변환
 
@@ -201,8 +199,7 @@
 - 선형 판별 분석 내부 동작 방식 (PCA와 유사)
    1. 표준화 전처리: 각 특성의 평균을 0, 분산을 1로 조정
    2. 평균 벡터 계산: 각 클래스에 대해 d차원의 평균 벡터를 계산 (=각 클래스별로 특성들의 평균값 계산 의미)
-      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/1339dcd2-c3e9-4499-94db-707977329014)
-      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/d6f3880c-dfbf-4fda-b8cf-70d44f3cf0b2)
+      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/1339dcd2-c3e9-4499-94db-707977329014) <img src="https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/d6f3880c-dfbf-4fda-b8cf-70d44f3cf0b2" width="600">
 
    3. 산포 행렬 계산: 클래스 간 산포 행렬과 클래스 내 산포 행렬 구성
       - 클래스 간 산포 행렬 = 클래스 평균 간의 분산
