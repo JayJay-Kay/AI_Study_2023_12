@@ -253,7 +253,7 @@
 - 파이썬으로 RBF커널 구현
  - 사이파이와 넘파이 헬퍼 함수로 쉽게 구현 가능 (참 쉽...죠?)
  - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/ffc410ba-7bc3-4970-89de-2e5aa0ab4106) ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/1d94c925-fd78-49bd-9f54-b17a352460b2)
-   - 단점: 사전에 ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/135d3bef-65ca-40ff-9df1-716848da08eb) 매개변수를 지정해야 함 (적절한 값을 찾을려면 실험을 해야 함)
+   - 단점: 사전에 ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/135d3bef-65ca-40ff-9df1-716848da08eb)(gamma) 매개변수를 지정해야 함 (적절한 값을 찾을려면 실험을 해야 함)
  - 다양한 예시들로 PCA vs KPCA 비교
    - 예시1: 반달 모양 (rbf_kernel_pca)함수를 비선형 데이터셋에 적용해서 구현
    - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/a3122efb-1660-4386-8c34-9ab1509762e2)
