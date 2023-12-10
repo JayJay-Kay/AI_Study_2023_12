@@ -182,4 +182,113 @@
 
 
 <h3>5.2. 선형 판별 분석을 통한 지도 방식의 데이터 압축</h3>
-<h3>5.3. 커널 PCA를 사용하여 비선형 매</h3>
+
+- 선형 판별 분석(Linear Discriminanat Analaysis, LDA)
+ - 규제가 없는 모델에서 차원의 저주로 인한 과대적합을 줄이고 계산 효율성을 높이는 특성 추출 기법
+ - 최적으로 클래스를 구분하는 특성 부분을 찾는것 (밑의 예시에서 x축으로 두 개의 정균 분포 클래스 구분 가능)
+ - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/2ab3a007-96fe-4e1e-86bf-6cc5b1fbe533)
+
+ - 주성분 분석(PCA)과 유사
+   - 둘다 (PCA & LDA) 데이터셋의 찾원 개수를 줄이는 선형 변환 기
+
+   - | 주성분 분석(PCA)              | 선형 판별 분석(LDA)                                 |
+     | ---------------------------- | -------------------------------------------------- |
+     | 비지도 학습 방식              | 지도 학습 방식                                      |
+     | 분산이 최대인 직교 성분 찾는것 | 클래스를 최적으로 구분할 수 있는 특성 부분 공간 찾는 것 |
+     | 데이터 시각화, 노이즈 제거, 특성 추출, 데이터 압축에 사용 | 분류 문제에서 차원 축소 도구로 사용 (PCA보다 분류 작업에서 더 효과적) |
+     | 데이터셋의 분산을 최대로 보존해서 특징 포착 가능 | 클래스간 분산 최대화, 클래스 내 분산 최소화 |
+
+- 선형 판별 분석 내부 동작 방식 (PCA와 유사)
+   1. 표준화 전처리: 각 특성의 평균을 0, 분산을 1로 조정
+   2. 평균 벡터 계산: 각 클래스에 대해 d차원의 평균 벡터를 계산 (=각 클래스별로 특성들의 평균값 계산 의미)
+      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/1339dcd2-c3e9-4499-94db-707977329014)
+      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/d6f3880c-dfbf-4fda-b8cf-70d44f3cf0b2)
+
+   3. 산포 행렬 계산: 클래스 간 산포 행렬과 클래스 내 산포 행렬 구성
+      - 클래스 간 산포 행렬 = 클래스 평균 간의 분산
+       - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/31893e53-d4a2-41a5-8205-37b7418fa3c1)
+       - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/76bce7f2-1928-4618-95b3-c8d742bd8fe0)![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/44548753-7b0b-4c62-8a2a-6035a5b8a1e1)
+      - 클래스 내 산포 행렬 = 각 클래스 내의 분산
+       - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/b5008223-dabc-4b9e-bd53-52add49be767)
+       - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/53dd3849-9539-42cd-ae3e-9bbfb47206a0)
+
+   4. 고유 벡터와 고윳값 계산: 산포 행렬로부터 고유 벡터와 고윳값 계산
+      - 공분산 행렬에 대한 고윳값 분해(PCA)대신 행렬 Sw^-1 Sb의 고윳값 계산
+      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/a0d4c355-02b8-475f-a908-3520a4c27cce)
+      - LDA에서 선형 판별 벡터는 최대 c - 1(클래스 레이블 갯수 - 1)
+        - Sb(클래스 간의 산포행렬)가 랭크 1 또는 그 이하인 c개의 행렬을 합한 것이기 때문
+   5. 고윳값 정렬: 고윳값을 내림차순으로 정렬하고 순서 매김 (윗 그림 참고)
+   6. 변환 행렬 구성: 가장 큰 k개의 고윳값의 고유 벡터를 선택하여 d x k차원의 변환 행렬 구성 (행렬의 열 = 고유 벡터)
+      - 일단 PCA와 비슷하게 각 고유 벡터/선형 판별 벡터가 커버하는 양이 얼만지 계산
+      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/ce9b88c1-fd81-42ef-991a-64ad56b9d45a)
+      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/0e756843-34c7-47b9-9bc5-d7fece6685e0)
+        - 두개의 벡터가 100% 커버
+      - 변환 행렬 W구현
+       - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/24ca5109-921f-46c2-b018-82ea03201c40)
+
+   7. 새로운 특성으로 공간 투영: 변환 행렬을 사용하여 샘플을 새로운 저차원의 특성 부분 공간으로 투영
+      - 변환 행렬 W를 훈련 데이터셋에 곱해서 데이터 변환
+      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/0dd71663-9682-419f-acc5-86414a25cb88)
+      - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/2a74d7dc-88df-45d9-bf63-81a7990f76a8)
+      - PCA때와 같이 결정 경계를 볼 수 있음
+        - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/abc23108-998e-4fc0-b6fe-19a272287496)
+      - 모델이 제대로 작동할때 테스트 데이터셋에 적용했을시
+        - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/bd16e437-2031-4334-a531-bbb2775a94e3)
+
+<h3>5.3. 커널 PCA를 사용하여 비선형 매핑</h3>
+
+- KCPA: PCA의 커널화 버전
+ - 비선형 문제(PCA, LDA 비효율적)가 선형 문제보다 실전 어플리케이션에서 더 많기 때문에 KPCA필요
+ - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/83260a9f-bdda-4d3c-ae2d-df1cc0ae3b20)
+- 커널 함수들
+ - 비선형 문제를 해결하기 위해 클래스가 선형으로 구분되는 고착원 특성 공간으로 투영함
+ - 비선형 매핑 함수: ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/bdd2bfcc-6769-48ca-a9af-8d4273de42d8)
+ - 커널트릭(Kernel trick)
+   - 고차원 공간으로 변환후 표준 PCA를 사용하여 선형 분류기로 구분될 수 있는 저차원 공간으로 데이터 투영시, 계산 비용을 절약 시켜주는 방법
+   - 원본 특성 공간에서 두 고차원 특성 벡터의 유사도 계산 가능
+   - 자주 사용되는 커널들 (θ = 임계값, P = 사용자가 지정한 거듭제곱)
+     - 다항 커널 ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/b7dd3057-fbef-4fb4-8cc7-5963f765a3d9)
+     - 하이퍼볼릭 탄젠트 커널 ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/03291b8e-0566-4427-801d-9b863febfcde)
+     - 방사 기저 함수(Radial Basis Function, RBF)/가우시안 커널 ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/f37b022f-dda4-4c9a-b8e0-d2fbfc669fb4)
+
+
+- 파이썬으로 RBF커널 구현
+ - 사이파이와 넘파이 헬퍼 함수로 쉽게 구현 가능 (참 쉽...죠?)
+ - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/ffc410ba-7bc3-4970-89de-2e5aa0ab4106) ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/1d94c925-fd78-49bd-9f54-b17a352460b2)
+   - 단점: 사전에 ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/135d3bef-65ca-40ff-9df1-716848da08eb) 매개변수를 지정해야 함 (적절한 값을 찾을려면 실험을 해야 함)
+ - 다양한 예시들로 PCA vs KPCA 비교
+   - 예시1: 반달 모양 (rbf_kernel_pca)함수를 비선형 데이터셋에 적용해서 구현
+   - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/a3122efb-1660-4386-8c34-9ab1509762e2)
+   - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/32090cbf-a971-44ca-87c7-c33b890262ab)
+     - 첫 그래프는 수직 축을 기준으로 반전됨 (선형 분류기에 도움 안됨)
+     - 두번째 그래프(첫번째 주성분만 그렸을때)는 선형적으로 구분 불가
+   - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/e1111ae6-fc32-44cf-a078-e2fed8ff1a8e) <br>
+
+   - 예시2: 동심원 분리하기
+   - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/842a7513-37fb-4a19-9f36-c912881ec9c4)
+   - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/63f65453-929d-44cf-92b0-cbd9508a2be1)
+   - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/57f09890-f69c-4145-82dc-5dbc4c745ccb)
+
+- 데이터셋 변환의 필요성
+  - 실제 애플리케이션에서는 훈련 데이터셋 이외에도 테스트 데이터셋이나 새로 수집된 샘플을 변환해야 함
+- PCA vs 커널 PCA
+  - 기본 PCA는 변환 행렬과 입력과 샘플 사이의 점곱을 계산하여 데이터를 투영 (공분산에서 얻은 최상위 고유 벡터 포함)
+  - 커널 PCA는 중심을 맞춘 커널 행렬의 고유 벡터를 구함 (기존 샘플은 이미 주성분 축에 투영되어있으며 새로운 샘플을 주성분 축에 투영하기 위해 별도의 계산이 필요함)
+- 커널 트릭의 활용
+  - 커널 PCA는 커널 트릭을 사용하여 새로운 샢믈의 명시적인 투영을 계산할 필요 없음
+  - 커널 PCA는 메모리 기반 방법으로 새로운 샘플을 투영하기 위해 원본 훈련 데이터셋을 재사용
+  - 훈련 데이터셋의 각 샘플과 새로운 샘플 사이의 RBF커널(유사도)을 계산하여 투 
+
+- 사이킷런의 활용 (커널 PCA)
+  - sklearn.decomposition모듈에 커널 PCA 클래스가 구현되어 있음
+  - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/4eaae4eb-99ad-41fe-a1a2-6037bf6b0466) ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/cc39632f-e34a-4b18-a5f4-7b7a37e3ca7d)
+  - 시각화
+  - ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/935f9155-19fb-4d7d-90d4-badfcb16b856)
+  - 그외에 지역 선형 임베딩을 적용한 데이터셋, SNE를 적용한 데이터셋, 커널 PCA를 적용한 동심원 데이터셋 구현 가능
+
+
+
+
+
+
+
