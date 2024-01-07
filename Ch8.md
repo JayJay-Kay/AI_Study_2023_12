@@ -44,6 +44,7 @@
     - 해결책: 외부 메모리 학습 <br>
       
   - 외부 메모리 학습 <br>
+  - <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fgooopy.tistory.com%2F123&psig=AOvVaw05G7DXIpBZ2YVB89b_HS7z&ust=1704698646169000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNiJirzfyoMDFQAAAAAdAAAAABAD" width="500"> <br></br> 
     - 데이터를 쪼개서 조금씩 학습시키기(?) <br>
     - 예시: 45개의 미니 배치 (각각 1000개 문서)를 사용하여 모델을 점진적으로 학습 후 마지막 5000개로 모델의 성능 평가 <br>
     - 정확도는 86.8%로 로지스틱 회귀 모델 보다 낮지만 메모리 효률적 = 가성비! <br>
