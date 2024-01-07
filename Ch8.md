@@ -52,6 +52,7 @@
       - 나쁜 데이터로 훈련 모델 수정 필요시 파악하는게 힘들수도 있음 <br>
     
   - 잠재 디리클레 할당 (LDA = Latent Dirichlet Allocation)
+  ![image](https://github.com/JayJay-Kay/AI_Study_2023_12/assets/110762505/63a9952b-fd3e-4265-99ad-2cc35ce010ca)
     - 비지도 학습 토픽 모델링 알고리즘
       - 토픽 모델링: 레이블이 없는 문서 텍스트에 토픽을 할당하는 기술
     - 문서에 자주 등장하는 단어의 그룹을 찾아내는 확률적 생성 모델
